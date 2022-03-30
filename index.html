@@ -193,6 +193,35 @@ body { margin: 0; padding: 0; }
         },
         
         });
+
+        // Create a popup, but don't add it to the map yet.
+        const popup = new mapboxgl.Popup({
+         closeButton: false,
+         closeOnClick: false
+        });
+
+        map.on('click', 'state-legend', (e) => {
+         map.getCanvas().style.cursor = 'pointer';
+         popup.setLngLat(e.lngLat);
+         popup.setHTML(e.features[0].properties["NAME_1"]+ ": " + Math.round(e.features[0].properties["АЛЕКСАНДАР ВУЧИЋ - СРБИЈА ПОБЕЂУЈЕ_sum"]/e.features[0].properties["Уписани бирачи _sum"]*100) +" %");
+         popup.addTo(map);
+        });
+        map.on('click', 'county-legend', (e) => {
+         map.getCanvas().style.cursor = 'pointer';
+         popup.setLngLat(e.lngLat);
+         popup.setHTML(e.features[0].properties["NAME_2"]+ ": " + Math.round(e.features[0].properties["АЛЕКСАНДАР ВУЧИЋ - СРБИЈА ПОБЕЂУЈЕ_sum"]/e.features[0].properties["Уписани бирачи _sum"]*100) + " %");
+         popup.addTo(map);
+        });
+        
+        // Change the cursor back to a pointer
+        // when it leaves the states layer.
+        map.on('mouseleave', 'state-legend', () => {
+         map.getCanvas().style.cursor = '';
+        });
+        map.on('mouseleave', 'county-legend', () => {
+         map.getCanvas().style.cursor = '';
+        });
+   
     });
 
     const stateLegendEl = document.getElementById('state-legend');
