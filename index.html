@@ -41,7 +41,8 @@ body { margin: 0; padding: 0; }
 <div id="map"></div>
 
 <div id="county-legend" class="legend" style="display: none">
-    <h4>АЛЕКСАНДАР ВУЧИЋ - СРБИЈА ПОБЕЂУЈЕ 2016 opstine</h4>
+    <h4>Parlamentarni izbor 2016 opstine</h4>
+    <h4>АЛЕКСАНДАР ВУЧИЋ - СРБИЈА ПОБЕЂУЈЕ 2016</h4>
     <div><span style="background-color: #723122"></span>200,000</div>
     <div><span style="background-color: #8b4225"></span>100,000</div>
     <div><span style="background-color: #a25626"></span>50,000</div>
@@ -54,7 +55,8 @@ body { margin: 0; padding: 0; }
 </div>
 
 <div id="state-legend" class="legend">
-    <h4>АЛЕКСАНДАР ВУЧИЋ - СРБИЈА ПОБЕЂУЈЕ 2016 pokrajine</h4>
+    <h4>Parlamentarni izbor 2016 regioni</h4>
+    <h4>АЛЕКСАНДАР ВУЧИЋ - СРБИЈА ПОБЕЂУЈЕ 2016</h4>
     <div><span style="background-color: #723122"></span>1,000,000</div>
     <div><span style="background-color: #8b4225"></span>500,000</div>
     <div><span style="background-color: #a25626"></span>100,000</div>
@@ -203,12 +205,14 @@ body { margin: 0; padding: 0; }
         map.on('click', 'state-legend', (e) => {
          map.getCanvas().style.cursor = 'pointer';
          popup.setLngLat(e.lngLat);
-         popup.setHTML(e.features[0].properties["NAME_1"]+ ": " + Math.round(e.features[0].properties["АЛЕКСАНДАР ВУЧИЋ - СРБИЈА ПОБЕЂУЈЕ_sum"]/e.features[0].properties["Уписани бирачи _sum"]*100) +" %");
+         let name = e.features[0].properties["NAME_1"]?e.features[0].properties["NAME_1"]:e.features[0].properties["NAME_1_2"];
+         popup.setHTML(name+ ": " + Math.round(e.features[0].properties["АЛЕКСАНДАР ВУЧИЋ - СРБИЈА ПОБЕЂУЈЕ_sum"]/e.features[0].properties["Уписани бирачи _sum"]*100) +" %");
          popup.addTo(map);
         });
         map.on('click', 'county-legend', (e) => {
          map.getCanvas().style.cursor = 'pointer';
          popup.setLngLat(e.lngLat);
+         let name = e.features[0].properties["NAME_2"]?e.features[0].properties["NAME_2"]:e.features[0].properties["NAME_2_2"];
          popup.setHTML(e.features[0].properties["NAME_2"]+ ": " + Math.round(e.features[0].properties["АЛЕКСАНДАР ВУЧИЋ - СРБИЈА ПОБЕЂУЈЕ_sum"]/e.features[0].properties["Уписани бирачи _sum"]*100) + " %");
          popup.addTo(map);
         });
