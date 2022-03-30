@@ -213,7 +213,7 @@ body { margin: 0; padding: 0; }
          map.getCanvas().style.cursor = 'pointer';
          popup.setLngLat(e.lngLat);
          let name = e.features[0].properties["NAME_2"]?e.features[0].properties["NAME_2"]:e.features[0].properties["NAME_2_2"];
-         popup.setHTML(e.features[0].properties["NAME_2"]+ ": " + Math.round(e.features[0].properties["АЛЕКСАНДАР ВУЧИЋ - СРБИЈА ПОБЕЂУЈЕ_sum"]/e.features[0].properties["Уписани бирачи _sum"]*100) + " % који су изашли и гласали за А. ВУЧИЋ - СРБИЈА ПОБЕЂУЈЕ");
+         popup.setHTML(name+ ": " + Math.round(e.features[0].properties["АЛЕКСАНДАР ВУЧИЋ - СРБИЈА ПОБЕЂУЈЕ_sum"]/e.features[0].properties["Уписани бирачи _sum"]*100) + " % који су изашли и гласали за А. ВУЧИЋ - СРБИЈА ПОБЕЂУЈЕ");
          popup.addTo(map);
         });
         
