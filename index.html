@@ -101,7 +101,7 @@ body { margin: 0; padding: 0; }
         //     }
         map.addSource('admin2', {
             'type': 'geojson',
-            'data': 'results_by_opstina.geojson'
+            'data': 'results_by_opstina2.geojson'
         });
         map.addSource('admin1', {
             'type': 'geojson',
@@ -121,7 +121,7 @@ body { margin: 0; padding: 0; }
                 'fill-color': [
                 'interpolate',
                 ['linear'],
-                ['coalesce', ['get', 'АЛЕКСАНДАР ВУЧИЋ - СРБИЈА ПОБЕЂУЈЕ'],0],
+                ['coalesce', ['get', 'АЛЕКСАНДАР ВУЧИЋ - СРБИЈА ПОБЕЂУЈЕ_sum'],0],
                 0,
                 //'#F2F12D',
                 '#FFFFFF',
