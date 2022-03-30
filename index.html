@@ -99,9 +99,13 @@ body { margin: 0; padding: 0; }
         //         name: "Idaho County",
         //         population: 16315
         //     }
-        map.addSource('admin1', {
+        map.addSource('admin2', {
             'type': 'geojson',
             'data': 'results_by_opstina.geojson'
+        });
+        map.addSource('admin1', {
+            'type': 'geojson',
+            'data': 'results_by_regions.geojson'
         });
         map.addSource('admin0', {
             'type': 'geojson',
@@ -110,13 +114,49 @@ body { margin: 0; padding: 0; }
         map.addLayer({
             'id': 'county-legend',
             'type': 'fill',
-            'source': 'admin1', // reference the data source
+            'minzoom': zoomThreshold,
+            'source': 'admin2', // reference the data source
             'layout': {},
             'paint': {
                 'fill-color': [
                 'interpolate',
                 ['linear'],
                 ['coalesce', ['get', 'АЛЕКСАНДАР ВУЧИЋ - СРБИЈА ПОБЕЂУЈЕ'],0],
+                0,
+                //'#F2F12D',
+                '#FFFFFF',
+                100,
+                '#EED322',
+                1000,
+                '#E6B71E',
+                5000,
+                '#DA9C20',
+                10000,
+                '#CA8323',
+                20000,
+                '#B86B25',
+                50000,
+                '#A25626',
+                100000,
+                '#8B4225',
+                200000,
+                '#723122'
+                ],
+                'fill-opacity': 0.9
+                }
+        });
+
+        map.addLayer({
+            'id': 'state-legend',
+            'type': 'fill',
+            'maxzoom': zoomThreshold,
+            'source': 'admin1', // reference the data source
+            'layout': {},
+            'paint': {
+                'fill-color': [
+                'interpolate',
+                ['linear'],
+                ['coalesce', ['get', 'АЛЕКСАНДАР ВУЧИЋ - СРБИЈА ПОБЕЂУЈЕ_sum'],0],
                 0,
                 //'#F2F12D',
                 '#FFFFFF',
@@ -150,7 +190,8 @@ body { margin: 0; padding: 0; }
         'paint': {
         'line-color': '#000',
         'line-width': 1
-        }
+        },
+        
         });
     });
 
