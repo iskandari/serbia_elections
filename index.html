@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Update a choropleth layer by zoom level</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script>
+<style>
+body { margin: 0; padding: 0; }
+#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+</style>
+</head>
+<body>
+<style>
+    .legend {
+        background-color: #fff;
+        border-radius: 3px;
+        bottom: 30px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+        padding: 10px;
+        position: absolute;
+        right: 10px;
+        z-index: 1;
+    }
+
+    .legend h4 {
+        margin: 0 0 10px;
+    }
+
+    .legend div span {
+        border-radius: 50%;
+        display: inline-block;
+        height: 10px;
+        margin-right: 5px;
+        width: 10px;
+    }
+</style>
+
+<div id="map"></div>
+
+<div id="county-legend" class="legend" style="display: none">
+    <h4>АЛЕКСАНДАР ВУЧИЋ - СРБИЈА ПОБЕЂУЈЕ 2016 opstine</h4>
+    <div><span style="background-color: #723122"></span>200,000</div>
+    <div><span style="background-color: #8b4225"></span>100,000</div>
+    <div><span style="background-color: #a25626"></span>50,000</div>
+    <div><span style="background-color: #b86b25"></span>20,000</div>
+    <div><span style="background-color: #ca8323"></span>10,000</div>
+    <div><span style="background-color: #da9c20"></span>5,000</div>
+    <div><span style="background-color: #e6b71e"></span>1,000</div>
+    <div><span style="background-color: #eed322"></span>100</div>
+    <div><span style="background-color: #f2f12d"></span>0</div>
+</div>
+
+<div id="state-legend" class="legend">
+    <h4>АЛЕКСАНДАР ВУЧИЋ - СРБИЈА ПОБЕЂУЈЕ 2016 pokrajine</h4>
+    <div><span style="background-color: #723122"></span>1,000,000</div>
+    <div><span style="background-color: #8b4225"></span>500,000</div>
+    <div><span style="background-color: #a25626"></span>100,000</div>
+    <div><span style="background-color: #b86b25"></span>50,000</div>
+    <div><span style="background-color: #ca8323"></span>10,000</div>
+    <div><span style="background-color: #da9c20"></span>5,000</div>
+    <div><span style="background-color: #e6b71e"></span>1,000</div>
+    <div><span style="background-color: #eed322"></span>100</div>
+    <div><span style="background-color: #f2f12d"></span>0</div>
+</div>
+
+<script>
+	// TO MAKE THE MAP APPEAR YOU MUST
+	// ADD YOUR ACCESS TOKEN FROM
+	// https://account.mapbox.com
+	mapboxgl.accessToken = 'pk.eyJ1IjoibHVqamFzIiwiYSI6ImNsMWQ1N3RsejA2dzkzY24zbHQ4dGw1ajYifQ.ulknGr0riUdl_pWi6gp5Vw';
+    const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/light-v10',
+        center: [21.28884578494251, 44.40321174690649],
+        minZoom: 3,
+        zoom: 5
+    });
+
+    const zoomThreshold = 6.5;
+
+    map.on('load', () => {
+        // Add a custom vector tileset source. The tileset used in
+        // this example contains a feature for every state and
+        // county in the U.S.
+        // Each state contains four properties. For example:
+        //     {
+        //         isState: true,
+        //         name: "Wyoming",
+        //         population: 584153,
+        //         state: 56
+        //     }
+        // Each county contains four properties. For example:
+        //     {
+        //         county: 16049,
+        //         isCounty: true,
+        //         name: "Idaho County",
+        //         population: 16315
+        //     }
+        map.addSource('admin1', {
+            'type': 'geojson',
+            'data': 'results_by_opstina.geojson'
+        });
+        map.addSource('admin0', {
+            'type': 'geojson',
+            'data': 'Serbia_admin0.geojson'
+        });
+        map.addLayer({
+            'id': 'county-legend',
+            'type': 'fill',
+            'source': 'admin1', // reference the data source
+            'layout': {},
+            'paint': {
+                'fill-color': [
+                'interpolate',
+                ['linear'],
+                ['coalesce', ['get', 'АЛЕКСАНДАР ВУЧИЋ - СРБИЈА ПОБЕЂУЈЕ'],0],
+                0,
+                //'#F2F12D',
+                '#FFFFFF',
+                100,
+                '#EED322',
+                1000,
+                '#E6B71E',
+                5000,
+                '#DA9C20',
+                10000,
+                '#CA8323',
+                20000,
+                '#B86B25',
+                50000,
+                '#A25626',
+                100000,
+                '#8B4225',
+                200000,
+                '#723122'
+                ],
+                'fill-opacity': 0.9
+                }
+        });
+
+
+        map.addLayer({
+        'id': 'outline',
+        'type': 'line',
+        'source': 'admin0',
+        'layout': {},
+        'paint': {
+        'line-color': '#000',
+        'line-width': 1
+        }
+        });
+    });
+
+    const stateLegendEl = document.getElementById('state-legend');
+    const countyLegendEl = document.getElementById('county-legend');
+    map.on('zoom', () => {
+        if (map.getZoom() > zoomThreshold) {
+            stateLegendEl.style.display = 'none';
+            countyLegendEl.style.display = 'block';
+        } else {
+            stateLegendEl.style.display = 'block';
+            countyLegendEl.style.display = 'none';
+        }
+    });
+</script>
+
+</body>
+</html>
