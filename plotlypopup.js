@@ -37,8 +37,8 @@ function createHtml(e,name){
 
     var layout = {
         //title: "<a target=\"_blank\" href=\"https://sr.wikipedia.org/wiki/"+ name.replace(/\s/g, "_").toLowerCase()  +"\">" + name + "</a>",
-        height: 100,
-        width: 100,
+        height: 200,
+        width: 200,
         //paper_bgcolor:"rgb(0,0,0,0)",
         paper_bgcolor:"rgb(255,255,255,0)",
         margin: {"b":0,"r":0,"t":0,"l":0}

@@ -4,7 +4,8 @@
 	mapboxgl.accessToken = 'pk.eyJ1IjoibHVqamFzIiwiYSI6ImNsMWQ1N3RsejA2dzkzY24zbHQ4dGw1ajYifQ.ulknGr0riUdl_pWi6gp5Vw';
     const map = new mapboxgl.Map({
         container: 'map',
-        style: 'mapbox://styles/mapbox/light-v10',
+        //style: 'mapbox://styles/mapbox/light-v10',
+        style: 'mapbox://styles/lujjas/cl1tlpjhr001914mq24rocupt',
         center: [21.28884578494251, 44.40321174690649],
         minZoom: 3,
         zoom: 5,
@@ -17,8 +18,8 @@
     mapboxgl: mapboxgl
     })
     );
-    const zoomThreshold = 9;
-    const zoomThreshold2 = 7.5;
+    const zoomThreshold = 10;
+    const zoomThreshold2 = 8;
     const zoomThreshold3 = 6.5
     const zoomThreshold4 = 5.5;
 
@@ -33,19 +34,13 @@
             'type': 'geojson',
             'data': 'Okrug_merged.geojson'
         });
-/*         map.addSource('borders', {
-            'type': 'geojson',
-            'data': 'new_borders.geojson'
-        }); */
+
         map.addSource('admin0', {
             'type': 'geojson',
             'data': "Republika_merged.geojson"
 
         });
-        map.addSource('admin3', {
-            'type': 'vector',
-            'url': "https://studio.mapbox.com/tilesets/lujjas.9xgx5kjb"
-        });
+
         map.addSource('admin01', {
             'type': 'geojson',
             'data': "Pokrajina_merged.geojson"
@@ -193,52 +188,7 @@
                 'fill-opacity': 0.9
                 }
         });
-        
-        map.addLayer({
-            'id': 'naselja-legend',
-            'type': 'fill',
-            'minzoom': zoomThreshold,
-            'source': 'admin3', // reference the data source
-            'layout': {},
-            'paint': {
-                'fill-color': [
-                'interpolate',
-                ['linear'],
-                ['coalesce', ['get', 'Гласали _sum'],0],
-                0,
-                //'#F2F12D',
-                '#FFFFFF',
-                50,
-                '#EED322',
-                500,
-                '#E6B71E',
-                2000,
-                '#DA9C20',
-                6000,
-                '#CA8323',
-                12000,
-                '#B86B25',
-                25000,
-                '#A25626',
-                50000,
-                '#8B4225',
-                100000,
-                '#723122'
-                ],
-                'fill-opacity': 0.9
-                }
-        });
-/*         map.addLayer({
-            'id': 'outline',
-            'type': 'line',
-            'source': 'borders',
-            'layout': {},
-            'paint': {
-            'line-color': '#000',
-            'line-width': 1
-        },
-        
-        }); */
+
 
         map.on('click', 'opstina-legend', (e) => {
          map.getCanvas().style.cursor = 'pointer';
@@ -270,19 +220,19 @@
          popup.setHTML(createHtml(e,name));
          popup.addTo(map);
         });
-        
-        map.on('click', 'naselja-legend', (e) => {
+         
+        map.on('click', 'naselja-srbija', (e) => {
          map.getCanvas().style.cursor = 'pointer';
          popup.setLngLat(e.lngLat);
          let name = e.features[0].properties["naselje_ime"];
          popup.setHTML(createHtml(e,name));
          popup.addTo(map);
-        });
+        }); 
 
 
-        map.on('mouseleave', 'naselja-legend', () => {
+         map.on('mouseleave', 'naselja-srbija', () => {
          map.getCanvas().style.cursor = '';
-        });
+        }); 
         map.on('mouseleave', 'opstina-legend', () => {
          map.getCanvas().style.cursor = '';
         });
