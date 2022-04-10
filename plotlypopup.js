@@ -7,7 +7,7 @@ function createHtml(e,name){
     let idx_skip = Object.keys(data).length-20;
     for (var property in data) {
         if (e.features[0].layer.id=="naselja-srbija"){
-            if(["naselje_ime","naselje_imel","naselje_maticni_broj","naselje_povrsina","objectid","opstina_ime","opstina_imel","opstina_maticni_broj", "Важећи_sum","Гласали _sum","Неважећи _sum","Неупотреб-qени _sum","Примqени _sum","У гласачкој кутији_sum","Уписани бирачи _sum"].indexOf(property)>=0){
+            if(["naselje_ime","naselje_imel","naselje_maticni_broj","naselje_povrsina","objectid","opstina_ime","opstina_imel","opstina_maticni_broj", "Важећи_sum","Гласали _sum","Неважећи _sum","Неупотреб-qени _sum","Примqени _sum","У гласачкој кутији_sum","Уписани бирачи _sum","Рбр. бирачког места _sum"].indexOf(property)>=0){
                 continue;
             }
         }else if ( ! data.hasOwnProperty(property) || idx_skip!=0 ) {
@@ -30,7 +30,7 @@ function createHtml(e,name){
         },
         hoverlabel:{
             font:{
-                size:10
+                size: 9
             }
         },
 
