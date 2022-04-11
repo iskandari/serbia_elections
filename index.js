@@ -9,15 +9,20 @@
         center: [21.28884578494251, 44.40321174690649],
         minZoom: 3,
         zoom: 5,
-        maxBounds: [[4.488639533775682,4.488639533775682],[38.03525851035914,48.21372525778102]]
+        maxBounds: [[4.488639533775682,38.18743500413535],[38.03525851035914,48.21372525778102]]
     });
         // Add the control to the map.
-    map.addControl(
-    new MapboxGeocoder({
+    map.addControl(new MapboxGeocoder({
     accessToken: mapboxgl.accessToken,
-    mapboxgl: mapboxgl
-    })
+        mapboxgl: mapboxgl,
+        countries: 'rs'
+        })
     );
+        // disable map rotation using right click + drag
+    map.dragRotate.disable();
+    
+    // disable map rotation using touch rotation gesture
+    map.touchZoomRotate.disableRotation();
     const zoomThreshold = 10;
     const zoomThreshold2 = 9;
     const zoomThreshold3 = 6.5
@@ -267,3 +272,23 @@ function createHtml(e,name){
     "</table>";
     return html;
 } 
+
+var zoomToFeat = function(feature, map) {
+    // based on this: https://www.mapbox.com/mapbox-gl-js/example/zoomto-linestring/
+
+    // Geographic coordinates of the LineString
+    var coordinates = feature.geometry.coordinates;
+
+    // Pass the first coordinates in the LineString to `lngLatBounds` &
+    // wrap each coordinate pair in `extend` to include them in the bounds
+    // result. A variation of this technique could be applied to zooming
+    // to the bounds of multiple Points or Polygon geomteries - it just
+    // requires wrapping all the coordinates with the extend method.
+    var bounds = coordinates.reduce(function(bounds, coord) {
+        return bounds.extend(coord);
+    }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
+
+    map.fitBounds(bounds, {
+        padding: 20
+    });
+};
