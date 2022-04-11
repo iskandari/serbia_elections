@@ -26,10 +26,7 @@
 
     map.on('load', () => {
         
-        map.addSource('admin2', {
-            'type': 'geojson',
-            'data': 'results_by_opstina2.geojson'
-        });
+
         map.addSource('admin1', {
             'type': 'geojson',
             'data': 'Okrug_merged.geojson'
@@ -153,44 +150,7 @@
                 }
         });
 
-        map.addLayer({
-            'id': 'opstina-legend',
-            'type': 'fill',
-            'minzoom': zoomThreshold2,
-            'maxzoom': zoomThreshold,
-            'source': 'admin2', // reference the data source
-            'layout': {},
-            'paint': {
-                'fill-color': [
-                'interpolate',
-                ['linear'],
-                ['coalesce', ['get', 'Гласали _sum'],0],
-                0,
-                //'#F2F12D',
-                '#FFFFFF',
-                100,
-                '#EED322',
-                1000,
-                '#E6B71E',
-                5000,
-                '#DA9C20',
-                10000,
-                '#CA8323',
-                20000,
-                '#B86B25',
-                50000,
-                '#A25626',
-                100000,
-                '#8B4225',
-                200000,
-                '#723122'
-                ],
-                'fill-opacity': 0.9
-                }
-        });
-
-
-        map.on('click', 'opstina-legend', (e) => {
+        map.on('click', 'opstina-srbija', (e) => {
          map.getCanvas().style.cursor = 'pointer';
          popup.setLngLat(e.lngLat);
          let name = e.features[0].properties["NL_NAME_2"]?e.features[0].properties["NL_NAME_2"]:e.features[0].properties["NL_NAME_2_2"];
@@ -233,7 +193,7 @@
          map.on('mouseleave', 'naselja-srbija', () => {
          map.getCanvas().style.cursor = '';
         }); 
-        map.on('mouseleave', 'opstina-legend', () => {
+        map.on('mouseleave', 'opstina-srbija', () => {
          map.getCanvas().style.cursor = '';
         });
         map.on('mouseleave', 'republika-legend', () => {
