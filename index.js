@@ -153,8 +153,8 @@
         map.on('click', 'opstina-srbija', (e) => {
          map.getCanvas().style.cursor = 'pointer';
          popup.setLngLat(e.lngLat);
-         let name = e.features[0].properties["NL_NAME_2"]?e.features[0].properties["NL_NAME_2"]:e.features[0].properties["NL_NAME_2_2"];
-         popup.setHTML(createHtml(e,name));
+         let name = e.features[0].properties["opstina_ime"];
+        popup.setHTML(createHtml(e,name));
          popup.addTo(map);
         });
         map.on('click', 'okrug-legend', (e) => {
