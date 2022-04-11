@@ -15,7 +15,8 @@
     map.addControl(new MapboxGeocoder({
     accessToken: mapboxgl.accessToken,
         mapboxgl: mapboxgl,
-        countries: 'rs'
+        countries: 'rs',
+        placeholder: 'Пронађи насеље'
         })
     );
         // disable map rotation using right click + drag
