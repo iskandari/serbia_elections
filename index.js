@@ -3,6 +3,7 @@
 	// https://account.mapbox.com               
 	mapboxgl.accessToken = 'pk.eyJ1IjoibHVqamFzIiwiYSI6ImNsMWQ1N3RsejA2dzkzY24zbHQ4dGw1ajYifQ.ulknGr0riUdl_pWi6gp5Vw';
     const map = new mapboxgl.Map({
+        attributionControl: false,
         container: 'map',
         //style: 'mapbox://styles/mapbox/light-v10',
         style: 'mapbox://styles/lujjas/cl1tlpjhr001914mq24rocupt',
@@ -13,12 +14,15 @@
     });
         // Add the control to the map.
     map.addControl(new MapboxGeocoder({
-    accessToken: mapboxgl.accessToken,
+        accessToken: mapboxgl.accessToken,
         mapboxgl: mapboxgl,
         countries: 'rs',
         placeholder: 'Пронађи насеље'
         })
-    );
+    )
+    .addControl(new mapboxgl.AttributionControl({
+        customAttribution: "Design by www.realeye.digital",
+        }));
         // disable map rotation using right click + drag
     map.dragRotate.disable();
     
