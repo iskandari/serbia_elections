@@ -19,7 +19,7 @@
     })
     );
     const zoomThreshold = 10;
-    const zoomThreshold2 = 8;
+    const zoomThreshold2 = 9;
     const zoomThreshold3 = 6.5
     const zoomThreshold4 = 5.5;
 
